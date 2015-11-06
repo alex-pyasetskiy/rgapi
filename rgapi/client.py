@@ -39,13 +39,13 @@ class RGApiClient(object):
             print "API Service {name}-{version} registered! Access: cline.{name}".format(name=new_service_name,
                                                                                          version=new_service_version)
 
-    def can_make_request(self):
+    def verify_rate_limit(self):
         for lim in self.limits:
             if not lim.request_available():
                 return False
         return True
 
-    def base_request(self, url, region, static=False, **kwargs):
+    def api_request(self, url, region, static=False, **kwargs):
         if region is None:
             region = self.default_region
         args = {'api_key': self.key}

@@ -1,13 +1,22 @@
 from unittest import TestCase
 
 from nose.tools import assert_is_instance, assert_in, assert_dict_equal
+
 from nose.tools import raises
 
 from rgapi import RGApiClient
 from rgapi.exceptions import RGApiWarning
 
 key = 'fd8b51de-ce68-4a1d-89a4-d216dcdac89d'
-name = 'Ultain'
+
+# test data, RU
+summoner = {"shanmar": {
+    "id": 310558,
+    "name": "Shanmar",
+    "profileIconId": 936,
+    "revisionDate": 1446828133000,
+    "summonerLevel": 30
+}}
 
 
 class FakeApiService(object):
@@ -23,6 +32,7 @@ class FakeApiService(object):
         return {"awesome": "response"}
 
 
+# noinspection PyUnresolvedReferences
 class RgpiClientSpec(TestCase):
     def setUp(self):
         self.client = RGApiClient("key")

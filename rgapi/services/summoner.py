@@ -40,10 +40,10 @@ class SummonerApiService(object):
     __service_name__ = 'summoners_api'
 
     def __init__(self, client):
-        self.base_request = client.base_request
+        self.api_request = client.api_request
 
     def _summoner_request(self, end_url, region, **kwargs):
-        return self.base_request(
+        return self.api_request(
             'v{version}/summoner/{end_url}'.format(
                 version=self.__api_version__,
                 end_url=end_url
@@ -53,7 +53,17 @@ class SummonerApiService(object):
         )
 
     @staticmethod
-    def sanitized_name(name):
+    def normalize_name(name):
+        """
+        Normalize summoner name before request due to RIOT Api requirements which is the summoner name in all
+        lower case and with spaces removed.
+
+        :param name: summoner name
+        :type name: str
+
+        :return: normalized name
+        :rtype: str
+        """
         return name.replace(' ', '').lower()
 
     def get_summoners(self, names=None, ids=None, region=None):
@@ -75,7 +85,7 @@ class SummonerApiService(object):
         if (names is None) != (ids is None):
             return self._summoner_request(
                 'by-name/{summoner_names}'.format(
-                    summoner_names=','.join([self.sanitized_name(n) for n in names])) if names is not None
+                    summoner_names=','.join([self.normalize_name(n) for n in names])) if names is not None
                 else '{summoner_ids}'.format(summoner_ids=','.join([str(i) for i in ids])),
                 region
             )
@@ -100,7 +110,7 @@ class SummonerApiService(object):
         """
         if (name is None) != (_id is None):
             if name is not None:
-                name = self.sanitized_name(name)
+                name = self.normalize_name(name)
                 return self.get_summoners(names=[name], region=region)[name]
             else:
                 return self.get_summoners(ids=[_id], region=region)[str(_id)]
