@@ -110,7 +110,7 @@ class SummonerApiService(object):
         """
         Get summoner names mapped by summoner ID for a given list of summoner IDs
 
-        :param summoner_ids: Comma-separated list of summoner IDs associated with summoner names to retrieve.
+        :param summoner_ids: list of summoner IDs associated with summoner names to retrieve.
         :type summoner_ids: list[str]
 
         :param region: Region where to retrieve the data.
@@ -125,6 +125,18 @@ class SummonerApiService(object):
         )
 
     def get_mastery_pages(self, summoner_ids, region=None):
+        """
+        Get mastery pages mapped by summoner ID for a given list of summoner IDs .
+
+        :param summoner_ids: list of summoners ids
+        :type summoner_ids: list[str]
+
+        :param region: Region where to retrieve the data.
+        :type region: Region
+
+        :return: object contains masteries information.
+        :rtype: dict[str,dict]
+        """
         return self._summoner_request(
             '{summoner_ids}/masteries'.format(summoner_ids=','.join([str(s) for s in summoner_ids])),
             region
