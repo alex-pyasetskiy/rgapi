@@ -7,7 +7,7 @@ from nose.tools import raises
 from rgapi import RGApiClient
 from rgapi.exceptions import RGApiWarning
 
-key = 'fd8b51de-ce68-4a1d-89a4-d216dcdac89d'
+key = 'some'
 
 # test data, RU
 summoner = {"shanmar": {
