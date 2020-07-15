@@ -27,7 +27,7 @@ setup(
     ],
     license='MIT',
     install_requires=[
-        'requests==2.8.1',
+        'requests==2.20.0',
         'enum==0.4.6',
         'pytz'
     ],
